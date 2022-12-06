@@ -2,6 +2,8 @@
 
 use Config\Db;
 
+require ('../config/db.php');
+
 // Получаем список файлов для миграций
 function getMigrationFiles($conn)
 {
