@@ -1,5 +1,5 @@
 <h1>Task list</h1>
-<?php if ($message): ?>
+<?php if (isset($message)): ?>
     <p><?php echo htmlspecialchars($message); ?></p>
 <?php endif; ?>
 <hr>

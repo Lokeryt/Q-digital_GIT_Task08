@@ -3,6 +3,6 @@
     <input type="text" class="input-task" name="password" placeholder="password" required>
     <input type="submit" class="all-button" name="auth" value="Login">
 </form>
-<?php if ($message): ?>
+<?php if (isset($message)): ?>
 <p><?php echo htmlspecialchars($message); ?></p>
 <?php endif; ?>
