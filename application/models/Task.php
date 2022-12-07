@@ -33,14 +33,12 @@ class Task extends Model
         $query->execute(['id' => $id]);
     }
 
-    public function changeTaskStatus($id)
+    public function changeTaskStatus($task)
     {
-        $task = $this->findTaskById($id);
-
         $status = $task['status'] ? 0 : 1;
 
         $query = $this->db->prepare("UPDATE $this->table SET status = :status WHERE id = :id");
-        $query->execute(['id' => $id, 'status' => $status]);
+        $query->execute(['id' => $task['id'], 'status' => $status]);
     }
 
     public function readyAllTasks($userId)
@@ -57,7 +55,7 @@ class Task extends Model
 
     public function findTaskById($id)
     {
-        $query = $this->db->prepare("SELECT status FROM $this->table WHERE id = :id");
+        $query = $this->db->prepare("SELECT * FROM $this->table WHERE id = :id");
         $query->execute(['id' => $id]);
         $task = $query->fetch(PDO::FETCH_ASSOC);
 

@@ -12,12 +12,26 @@ class AuthorizationController extends Controller
 
     public function index()
     {
+        $message = $this->flash();
+
         $this->view->path = self::PATH;
-        $this->view->render();
+        $this->view->render(['message' => $message]);
     }
 
     public function login()
     {
+        if (!isset($_POST['auth'])) {
+            $this->flash('Error');
+            $this->view->redirect();
+            exit;
+        }
+
+        if (empty($_POST['login']) || empty($_POST['password'])) {
+            $this->flash('Fill login and password');
+            $this->view->redirect();
+            exit;
+        }
+
         $params = [
             'login' => $_POST['login'],
             'password' => $_POST['password'],
@@ -27,6 +41,7 @@ class AuthorizationController extends Controller
         $response = $user->checkUser($params);
 
         if ($response['message']) {
+            $this->flash($response['message']);
             $this->view->redirect();
             exit;
         }
@@ -36,7 +51,7 @@ class AuthorizationController extends Controller
 
     public function logout()
     {
-        $_SESSION['user_id'] = null;
+        unset($_SESSION['user_id']);
 
         $this->view->path = self::PATH;
         $this->view->render();

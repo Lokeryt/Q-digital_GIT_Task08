@@ -23,7 +23,7 @@ class User extends Model
                 $_SESSION['user_id'] = $user['id'];
             } else {
                 $route = '';
-                $invPass = true;
+                $message = 'Invalid password';
             }
         } else {
             $this->createUser($params);
@@ -31,7 +31,7 @@ class User extends Model
             $_SESSION['user_id'] = $this->db->lastInsertId();
         }
 
-        return ['message' => $invPass ?? false, 'route' => $route];
+        return ['message' => $message ?? null, 'route' => $route];
     }
 
     public function createUser($params)
