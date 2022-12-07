@@ -1,10 +1,13 @@
 <h1>Task list</h1>
+<?php if ($message): ?>
+    <p><?php echo htmlspecialchars($message); ?></p>
+<?php endif; ?>
 <hr>
 <div class="main">
     <div>
         <form action="task/create" method="POST">
             <input type="text" class="input-task" placeholder="Enter text..." name="description" required>
-            <input type="submit" class="add-task-button" value="Add task">
+            <input type="submit" class="add-task-button" name="create" value="Add task">
         </form>
         <br>
         <div class="all-buttons-section">

@@ -28,7 +28,22 @@ class Controller
         if ($this->route['auth'] == 'authorize' && !$isAuth) {
             View::errorCode(403);
         } elseif ($this->route['auth'] == 'not_authorize' && $isAuth) {
-            View::errorCode(403);
+            $this->view->redirect('tasks');
         }
+    }
+
+    public function flash(string $message = null)
+    {
+        if ($message) {
+            $_SESSION['flash'] = $message;
+        } else {
+            if (!empty($_SESSION['flash'])) {
+                $message = $_SESSION['flash'];
+            }
+
+            unset($_SESSION['flash']);
+        }
+
+        return $message;
     }
 }
