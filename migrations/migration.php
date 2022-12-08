@@ -59,7 +59,7 @@ function migrate($conn, $file)
 // Стартуем
 
 // Подключаемся к базе
-$conn = (new Db())->connectDb();
+$conn = (Db::getInstance())->getConnection();
 
 // Получаем список файлов для миграций за исключением тех, которые уже есть в таблице versions
 $files = getMigrationFiles($conn);

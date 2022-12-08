@@ -12,7 +12,6 @@ class Model
 
     public function __construct()
     {
-        $db = new Db();
-        $this->db = $db->connectDb();
+        $this->db = Db::getInstance()->getConnection();
     }
 }

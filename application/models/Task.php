@@ -4,8 +4,6 @@ namespace Application\Models;
 
 use Application\Core\Model;
 
-use Application\Models\User;
-
 use PDO;
 
 class Task extends Model
