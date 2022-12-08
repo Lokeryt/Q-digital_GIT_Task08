@@ -24,7 +24,7 @@ class Db
         return self::$_instance;
     }
 
-    public function __construct()
+    private function __construct()
     {
         $this->db = new PDO('mysql:host='.self::DB_HOST.';dbname='.self::DB_NAME, self::DB_USERNAME, self::DB_PASSWORD) or die('Connection error');
     }
