@@ -46,4 +46,20 @@ class Controller
 
         return $message;
     }
+
+    public function checkParametersExist(array $variable, array $parameters, string $message, $url = '')
+    {
+        foreach ($parameters as $parameter) {
+            if (empty($variable[$parameter])) {
+                $this->redirectWithError($message, $url);
+            }
+        }
+    }
+
+    public function redirectWithError($message, $url = '')
+    {
+        $this->flash($message);
+        $this->view->redirect($url);
+        exit;
+    }
 }

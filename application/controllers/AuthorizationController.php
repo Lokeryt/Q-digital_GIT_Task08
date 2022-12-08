@@ -20,17 +20,8 @@ class AuthorizationController extends Controller
 
     public function login()
     {
-        if (!isset($_POST['auth'])) {
-            $this->flash('Error');
-            $this->view->redirect();
-            exit;
-        }
-
-        if (empty($_POST['login']) || empty($_POST['password'])) {
-            $this->flash('Fill login and password');
-            $this->view->redirect();
-            exit;
-        }
+        $this->checkParametersExist($_POST, ['auth'], 'Error');
+        $this->checkParametersExist($_POST, ['login', 'password'], 'Fill login and password');
 
         $params = [
             'login' => $_POST['login'],

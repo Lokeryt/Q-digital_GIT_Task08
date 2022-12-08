@@ -24,17 +24,8 @@ class TaskController extends Controller
 
     public function store()
     {
-        if (!isset($_POST['create'])) {
-            $this->flash('Error');
-            $this->view->redirect();
-            die();
-        }
-
-        if (empty($_POST['description'])) {
-            $this->flash('Fill task description');
-            $this->view->redirect();
-            die();
-        }
+        $this->checkParametersExist($_POST, ['create'], 'Error');
+        $this->checkParametersExist($_POST, ['description'], 'Fill task description');
 
         $params = [
             'user_id' => $_SESSION['user_id'],
@@ -42,7 +33,7 @@ class TaskController extends Controller
         ];
 
         (new Task())->createTask($params);
-        $this->view->redirect(self::ROUTE);
+        $this->view->redirect();
     }
 
     public function delete()
@@ -50,7 +41,7 @@ class TaskController extends Controller
         $task = $this->checkTask($this->route['id']);
 
         (new Task())->deleteTask($task['id']);
-        $this->view->redirect(self::ROUTE);
+        $this->view->redirect();
     }
 
     public function changeStatus()
@@ -58,19 +49,19 @@ class TaskController extends Controller
         $task = $this->checkTask($this->route['id']);
 
         (new Task())->changeTaskStatus($task);
-        $this->view->redirect(self::ROUTE);
+        $this->view->redirect();
     }
 
     public function readyAll()
     {
         (new Task())->readyAllTasks($_SESSION['user_id']);
-        $this->view->redirect(self::ROUTE);
+        $this->view->redirect();
     }
 
     public function deleteAll()
     {
         (new Task())->deleteAllTasks($_SESSION['user_id']);
-        $this->view->redirect(self::ROUTE);
+        $this->view->redirect();
     }
 
     private function checkTask($taskId)
@@ -78,15 +69,11 @@ class TaskController extends Controller
         $task = (new Task())->findTaskById($taskId);
 
         if (!$task) {
-            $this->flash('Task not exist');
-            $this->view->redirect();
-            die();
+            $this->redirectWithError('Task not exist');
         }
 
         if ($task['user_id'] != $_SESSION['user_id']) {
-            $this->flash('No access');
-            $this->view->redirect();
-            die();
+            $this->redirectWithError('No access');
         }
 
         return $task;
