@@ -53,14 +53,10 @@ class Route
                 if (method_exists($path, $action)) {
                     $controller = new $path($this->params);
                     $controller->$action();
-                } else {
-                    View::errorCode(404);
+                    return;
                 }
-            } else {
-                View::errorCode(404);
             }
-        } else {
-            View::errorCode(404);
         }
+        View::errorCode(404);
     }
 }

@@ -26,12 +26,15 @@
     </div>
     <hr>
     <?php foreach ($tasks as $task): ?>
+        <?
+            $statusText = $task['status'] ? 'Unready' : 'Ready';
+        ?>
         <div class="task-list">
             <div>
                 <div class="task-list">
                     <h3><?php echo htmlspecialchars($task['description']); ?></h3>
                     <form action="task/ready/<?php echo htmlspecialchars($task['id']); ?>" method="POST">
-                        <input type="submit" class="all-button" name="button"<?php if (!$task['status']): ?> value="Ready" <?php else: ?> value="Unready" <?php endif; ?>>
+                        <input type="submit" class="all-button" name="button" value="<?php echo htmlspecialchars($statusText); ?>">
                     </form>
                     <form action="task/delete/<?php echo htmlspecialchars($task['id']); ?>" method="POST">
                         <input type="submit" class="all-button" name="button" value="Delete">
